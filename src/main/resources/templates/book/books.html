@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="nav-container" style="width: 100%">
+    <div th:insert="fragments/bodyHeader" th:remove="tag"></div>
+    <br>
+</div>
+<body>
+<div id="btn-toolbar mb-3" style="padding: 0 5px 0 5px" role="toolbar">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal" data-whatever="@mdo">
+        Добавить
+    </button>
+    <div class="input-group mb-3" style="float: right; width: 40%">
+        <input id="search" name="search" type="text" class="form-control" placeholder="Введите название книги" aria-label="Введите название книги" aria-describedby="searchBtn">
+        <div class="input-group-append">
+            <button class="btn btn-outline-success" type="button" id="searchBtn" >Поиск</button>
+        </div>
+    </div>
+</div>
+
+<div class="book_list" th:fragment="book_list">
+    <div th:switch="${bookPage.content}">
+        <h2 th:case="null">Книг еще нет</h2>
+        <div th:case="*">
+            <table id="myTable" class="table table-bordered" style="width: 100%">
+                <colgroup>
+                    <col span="4" width="20%">
+                    <col width="10%">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th scope="col">Название</th>
+                    <th scope="col">Жанр</th>
+                    <th scope="col">Автор</th>
+                    <th scope="col">Год издания</th>
+                    <th scope="col">Количество листов</th>
+                    <th scope="col">Количество книг</th>
+                    <th scope="col">Edit</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book, iStat : ${bookPage.content}"
+                    th:style="${iStat.odd}? 'font-weight: bold;'"
+                    th:alt-title="${iStat.even}? 'even' : 'odd'">
+                    <td th:text="${book.name}"></td>
+                    <td th:text="${book.getGenre().getRusName()}"></td>
+                    <td th:text="${book.getAuthor().getFio()}"></td>
+                    <td th:text="${book.getDateOfIssue()}"></td>
+                    <td th:text="${book.getCountOfSheets()}"></td>
+                    <td th:text="${book.getCount()}"></td>
+                    <td>
+                        <a th:href="@{getOne/(id=${book.id})}" class="btn btn-warning">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="margin-top: 10px">
+            <div th:if="${bookPage.totalPages > 1}" class="pagination">
+            <span>
+        <button th:onclick="|updateBookList(1, 5)|">&laquo;</button>
+        </span>
+            </div>
+            <div th:if="${bookPage.totalPages > 0}" class="pagination"
+                 th:each="pageNumber : ${pageNumbers}">
+                <button th:onclick="|updateBookList( ${pageNumber}, ${bookPage.size})|"
+                        th:text=${pageNumber}
+                        th:class="${pageNumber==bookPage.number + 1} ? active"></button>
+            </div>
+            <div th:if="${bookPage.totalPages > 1}" class="pagination">
+            <span>
+        <button th:onclick="|updateBookList(${bookPage.totalPages}, 5)|">&raquo;</button>
+        </span>
+            </div>
+        </div>
+    </div>
+
+    <div th:insert="book/modal/addBook" th:remove="tag"></div>
+    <div th:insert="book/modal/editBook" th:remove="tag"></div>
+
+</div>
+</body>
+</html>

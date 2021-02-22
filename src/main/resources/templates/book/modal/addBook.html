@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel"
+     aria-hidden="true">
+    <form th:action="@{/books/addNew}" method="post">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">New book</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="book-name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="book-name" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="book-genre" class="col-form-label">Жанр:</label>
+                        <select name="genre" class="custom-select" id="book-genre">
+                            <option value="" selected="selected"></option>
+                            <option th:each="genre: ${T(by.ilyushenko.library.models.Genre).values()}"
+                                    th:value="${genre}"
+                                    th:text="${genre.getRusName()}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="book-author" class="col-form-label">Автор:</label>
+                        <select name="author" class="custom-select" id="book-author">
+                            <option value="" selected="selected"></option>
+                            <option th:each="author: ${authors}"
+                                    th:value="${author.id}"
+                                    th:text="${author.getFio()}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="book-countSheets" class="col-form-label">Count of sheets:</label>
+                        <input type="number" class="form-control" id="book-countSheets" name="countOfSheets">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="book-count" class="col-form-label">Count:</label>
+                        <input type="number" class="form-control" id="book-count" name="count">
+                    </div>
+                    <div class="form-group">
+                        <label for="book-year" class="col-form-label">DateOfIssue:</label>
+                        <input type="number" placeholder="YYYY" min="2017" max="2100" class="form-control" id="book-year" name="dateOfIssue">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</html>
