@@ -1,28 +1,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link th:rel="stylesheet" th:href="@{/cssandjs/css/main.css}"/>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.3.0/font/bootstrap-icons.css}"/>
+    <link th:rel="stylesheet" th:href="@{/css/main.css}"/>
     <script type="text/javascript" th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
-    <script type="text/javascript" src="../../static/cssandjs/js/book/book.js"
-            th:src="@{/cssandjs/js/book/book.js}"></script>
-
+    <script type="text/javascript" src="../../static/js/book.js"
+            th:src="@{/js/book.js}"></script>
+    <script type="text/javascript" src="../../static/js/general.js"
+            th:src="@{/js/general.js}"></script>
 </head>
-<body th:fragment="bodyHeader">
-<ul class="nav nav-tabs" th:with="view=${#httpServletRequest.getServletPath()}">
-    <li class="nav-item" th:classappend="${#strings.startsWith(view,'/home')? 'active' : ''}">
-        <a class="nav-link" href="../welcome" aria-selected="false">Добро пожаловать</a>
-    </li>
-    <li class="nav-item" th:classappend="${#strings.startsWith(view,'/home')? 'active' : ''}">
-        <a class="nav-link active" href="/books/getAll" aria-selected="true">Книги</a>
-    </li>
-    <li class="nav-item" th:classappend="${#strings.startsWith(view,'/home')? 'active' : ''}">
-        <a class="nav-link" href="#about" aria-selected="false">About</a>
-    </li>
-    <li class="nav-item" th:classappend="${#strings.startsWith(view,'/home')? 'active' : ''}">
-        <a class="nav-link disabled" href="#" aria-selected="false">Disabled</a>
-    </li>
-</ul>
-</body>
 </html>

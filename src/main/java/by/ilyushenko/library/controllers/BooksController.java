@@ -2,8 +2,6 @@ package by.ilyushenko.library.controllers;
 
 import by.ilyushenko.library.models.Author;
 import by.ilyushenko.library.models.Book;
-import by.ilyushenko.library.models.Genre;
-import by.ilyushenko.library.repository.BookRepository;
 import by.ilyushenko.library.service.AuthorService;
 import by.ilyushenko.library.service.BookService;
 import org.apache.commons.lang3.StringUtils;
@@ -12,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +20,7 @@ import java.util.stream.IntStream;
 @Controller
 @RequestMapping("/books")
 public class BooksController {
-    private static final int PAGE_SIZE = 5;
+    private static final int PAGE_SIZE = 8;
     private static final int PAGE_ONE = 1;
     private final BookService bookService;
     private final AuthorService authorService;
@@ -49,6 +46,12 @@ public class BooksController {
     @ResponseBody
     public Optional<Book> getOne(Integer id) {
         return bookService.findById(id);
+    }
+
+    @RequestMapping(value = "/delete", method = {RequestMethod.DELETE, RequestMethod.GET})
+    public String delete(Integer id){
+        bookService.delete(id);
+        return "redirect:/books/getAll";
     }
 
     @PostMapping("/addNew")

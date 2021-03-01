@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body th:fragment="bodyHeader">
+<ul class="nav nav-tabs navbar-light" th:with="view=${#httpServletRequest.getServletPath()}">
+    <li class="nav-item" th:classappend="${#strings.startsWith(view,'/home')? 'active' : ''}">
+        <a class="nav-link" href="../welcome">Добро пожаловать</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" th:classappend="${#strings.startsWith(view,'/books/getAll')? 'active' : ''}"
+           th:href="@{/books/getAll}">Книги</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" th:classappend="${#strings.startsWith(view,'/about')? 'active' : ''}"
+           th:href="@{/about}">About</a>
+    </li>
+    <li class="nav-item" th:classappend="${#strings.startsWith(view,'/home')? 'active' : ''}">
+        <a class="nav-link disabled" href="#" aria-selected="false">Disabled</a>
+    </li>
+</ul>
+</body>
+</html>

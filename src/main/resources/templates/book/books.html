@@ -1,84 +1,149 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div class="nav-container" style="width: 100%">
-    <div th:insert="fragments/bodyHeader" th:remove="tag"></div>
-    <br>
-</div>
+<div th:insert="fragments/header" th:remove="tag"></div>
 <body>
-<div id="btn-toolbar mb-3" style="padding: 0 5px 0 5px" role="toolbar">
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal" data-whatever="@mdo">
-        Добавить
-    </button>
-    <div class="input-group mb-3" style="float: right; width: 40%">
-        <input id="search" name="search" type="text" class="form-control" placeholder="Введите название книги" aria-label="Введите название книги" aria-describedby="searchBtn">
-        <div class="input-group-append">
-            <button class="btn btn-outline-success" type="button" id="searchBtn" >Поиск</button>
-        </div>
+<header>
+    <div class="nav-container" style="width: 100%">
+        <div th:insert="fragments/nav-tabs" th:remove="tag"></div>
     </div>
-</div>
-
-<div class="book_list" th:fragment="book_list">
-    <div th:switch="${bookPage.content}">
-        <h2 th:case="null">Книг еще нет</h2>
-        <div th:case="*">
-            <table id="myTable" class="table table-bordered" style="width: 100%">
-                <colgroup>
-                    <col span="4" width="20%">
-                    <col width="10%">
-                </colgroup>
-                <thead>
-                <tr>
-                    <th scope="col">Название</th>
-                    <th scope="col">Жанр</th>
-                    <th scope="col">Автор</th>
-                    <th scope="col">Год издания</th>
-                    <th scope="col">Количество листов</th>
-                    <th scope="col">Количество книг</th>
-                    <th scope="col">Edit</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="book, iStat : ${bookPage.content}"
-                    th:style="${iStat.odd}? 'font-weight: bold;'"
-                    th:alt-title="${iStat.even}? 'even' : 'odd'">
-                    <td th:text="${book.name}"></td>
-                    <td th:text="${book.getGenre().getRusName()}"></td>
-                    <td th:text="${book.getAuthor().getFio()}"></td>
-                    <td th:text="${book.getDateOfIssue()}"></td>
-                    <td th:text="${book.getCountOfSheets()}"></td>
-                    <td th:text="${book.getCount()}"></td>
-                    <td>
-                        <a th:href="@{getOne/(id=${book.id})}" class="btn btn-warning">
-                            Edit
+    <br>
+</header>
+<main>
+    <div class="row" style="width: 100%">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="position-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <i class="bi bi-book" style="font-size: 20pt"></i>
+                            Книги
                         </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div style="margin-top: 10px">
-            <div th:if="${bookPage.totalPages > 1}" class="pagination">
-            <span>
-        <button th:onclick="|updateBookList(1, 5)|">&laquo;</button>
-        </span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-person-square" style="font-size: 20pt"></i>
+                            Авторы
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-bookmark" style="font-size: 20pt"></i>
+                            Категории
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-people-fill" style="font-size: 20pt"></i>
+                            Читатели
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-bar-chart-line-fill" style="font-size: 20pt"></i>
+                            Отчеты
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                 class="feather feather-layers">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                <polyline points="2 17 12 22 22 17"></polyline>
+                                <polyline points="2 12 12 17 22 12"></polyline>
+                            </svg>
+                            Integrations
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <div th:if="${bookPage.totalPages > 0}" class="pagination"
-                 th:each="pageNumber : ${pageNumbers}">
-                <button th:onclick="|updateBookList( ${pageNumber}, ${bookPage.size})|"
-                        th:text=${pageNumber}
-                        th:class="${pageNumber==bookPage.number + 1} ? active"></button>
+        </nav>
+        <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div id="btn-toolbar mb-3" role="toolbar">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal"
+                        data-whatever="@mdo">
+                    Добавить
+                </button>
+                <div class="input-group mb-3" style="float: right; width: 40%">
+                    <input id="search" name="search" type="text" class="form-control"
+                           placeholder="Введите название книги"
+                           aria-label="Введите название книги" aria-describedby="searchBtn">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-success" type="button" id="searchBtn">Поиск</button>
+                    </div>
+                </div>
             </div>
-            <div th:if="${bookPage.totalPages > 1}" class="pagination">
-            <span>
-        <button th:onclick="|updateBookList(${bookPage.totalPages}, 5)|">&raquo;</button>
-        </span>
+            <div class="book_list" th:fragment="book_list">
+                <div th:switch="${bookPage.content}">
+                    <h2 th:case="null">Книг еще нет</h2>
+                    <div th:case="*">
+                        <table id="myTable" class="table table-bordered" style="width: 100%">
+                            <colgroup>
+                                <col span="4" width="20%">
+                                <col width="10%">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th scope="col" th:text="#{book.name}">Название</th>
+                                <th scope="col" th:text="#{book.genre}">Жанр</th>
+                                <th scope="col">Автор</th>
+                                <th scope="col">Год издания</th>
+                                <th scope="col">Количество листов</th>
+                                <th scope="col">Количество книг</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="book, iStat : ${bookPage.content}"
+                                th:style="${iStat.odd}? 'font-weight: bold;'"
+                                th:alt-title="${iStat.even}? 'even' : 'odd'"
+                                th:object="${book}">
+                                <td th:text="*{name}"></td>
+                                <td th:text="*{genre.getRusName()}"></td>
+                                <td th:text="*{author.fio}"></td>
+                                <td th:text="*{dateOfIssue}"></td>
+                                <td th:text="*{countOfSheets}"></td>
+                                <td th:text="*{count}"></td>
+                                <td>
+                                    <a th:href="@{getOne/(id=*{id})}" id="editButton" class="btn btn-warning">
+                                        Edit
+                                    </a>
+                                </td>
+                                <td>
+                                    <a th:href="@{delete/(id=*{id})}" id="deleteButton" class="btn btn-danger">
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <nav aria-label="...">
+                        <ul th:object="${bookPage}" class="pagination">
+                            <li th:if="*{totalPages > 1}" class="page-item">
+                                <a class="page-link btn" tabindex="-1" aria-disabled="true"
+                                   th:onclick="|updateBookList(1, 8)|">&laquo;</a>
+                            </li>
+                            <li th:if="*{totalPages > 0}" th:each="pageNumber : ${pageNumbers}"
+                                th:class="${pageNumber==bookPage.number + 1} ? 'page-item active': 'page-item'">
+                                <a class="page-link btn" th:onclick="|updateBookList( ${pageNumber}, *{size})|"
+                                   th:text="${pageNumber}">
+                                </a>
+                            </li>
+                            <li th:if="*{totalPages > 1}" class="page-item">
+                                <a class="page-link btn" th:onclick="|updateBookList(*{totalPages}, 8)|">&raquo;</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
+            <div th:insert="book/modal/addBook" th:remove="tag"></div>
+            <div th:insert="book/modal/editBook" th:remove="tag"></div>
+            <div th:insert="book/modal/deleteBook" th:remove="tag"></div>
         </div>
     </div>
-
-    <div th:insert="book/modal/addBook" th:remove="tag"></div>
-    <div th:insert="book/modal/editBook" th:remove="tag"></div>
-
-</div>
+</main>
 </body>
 </html>
