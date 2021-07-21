@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="addModalLabel">Создание пользователя</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="custom-alert"></div>
+            <form th:action="@{/users/saveUser}" th:object="${user}" method="post" id="add_user" >
+                <div class="mb-3">
+                    <label for="lastName" class="col-form-label">Фамилия:</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="firstName" class="col-form-label">Имя:</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="middleName" class="col-form-label">Отчество:</label>
+                    <input type="text" class="form-control" id="middleName" name="middleName">
+                </div>
+                <div class="mb-3">
+                    <label for="login" class="col-form-label">Логин:</label>
+                    <input type="text" class="form-control" id="login" name="login" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="col-form-label">Пароль:</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="user-roles" class="col-form-label">Роль:</label>
+                    <select id="user-roles" class="form-select" size="3" th:field="*{roles}" multiple="multiple" required>
+                        <option th:each="role : ${predefinedRoles}"
+                                th:value="${{role}}"
+                                th:text="${role.pid}">
+                            Cinema
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="col-form-label">Статус:</label>
+                    <input name= "status" type="radio" class="radio" required
+                           th:each="status : ${T(com.example.library.library.model.Status).values()}"
+                           th:text="${status}"
+                           th:value="${status}"/>
+                    </label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</html>

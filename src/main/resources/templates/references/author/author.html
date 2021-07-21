@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <main class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 mt-5 mb-5">
+                <div class="input-group mb-3 w-50 ms-auto">
+                    <input type="text" class="form-control" aria-label="Search" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Поиск</button>
+                </div>
+                <table class="table">
+                    <thead class="table-secondary">
+                    <tr>
+                        <th scope="col">Имя</th>
+                        <th scope="col">Отчество</th>
+                        <th scope="col">Фамилия</th>
+                        <th scope="col">Год рождения</th>
+                        <th scope="col">Пол</th>
+                        <th scope="col">Удаление</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="author : ${authors}" th:object="${author}">
+                        <td th:text="*{firstName}"></td>
+                        <td th:text="*{middleName}"></td>
+                        <td th:text="*{lastName}"></td>
+                        <td th:text="*{dateHelper}"></td>
+                        <td th:text="*{sex}"></td>
+                        <td>
+                            <a th:href="@{delete/(pid=*{pid})}" class="btn btn-danger">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

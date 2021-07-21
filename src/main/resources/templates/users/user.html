@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header :: head(~{::script}, ~{})">
+    <script type="text/javascript" th:src="@{js/user.js}"></script>
+</div>
+<header>
+    <div th:replace="fragments/nav-bar :: nav_bar"></div>
+</header>
+<main class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 mt-5 mb-5">
+            <div th:replace="users/actionBar"></div>
+            <div class="user_list" th:fragment="user_list">
+                <div th:replace="fragments/alert"></div>
+                <div th:replace="users/userTable"></div>
+                <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel"
+                     aria-hidden="true"></div>
+                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+                     aria-hidden="true"></div>
+                <div th:replace="users/modal/deleteUser"></div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:include="fragments/footer :: footer"></footer>
+</html>

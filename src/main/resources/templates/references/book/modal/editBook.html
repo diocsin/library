@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Редактирование</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form th:action="@{references/books/updateBook}" method="put" th:object="${book}" id="editForm">
+                <input type="hidden" name="pid" id="edit-book-id">
+                <div class="mb-1 w-50 h-50">
+                    <img class="card-img" th:src="@{/books/image(pid=${book.pid})}" />
+                </div>
+                <div class="mb-1">
+                    <label for="edit-book-name" class="col-form-label">Name:</label>
+                    <input type="text" class="form-control" th:field="*{name}" id="edit-book-name" name="name">
+                </div>
+                <div class="mb-1">
+                    <label for="edit-book-genre" class="col-form-label">Жанр:</label>
+                    <select name="genre" class="form-select" id="edit-book-genre">
+                        <option th:each="genre: ${T(com.example.library.library.model.Genre).values()}"
+                                th:value="${genre}"
+                                th:text="${genre.getRusName()}">
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-1">
+                    <label for="edit-book-author" class="col-form-label">Автор:</label>
+                    <select name="author" class="form-select" th:field="*{author}" id="edit-book-author">
+                        <option th:each="author: ${authors}"
+                                th:value="${author.pid}"
+                                th:text="${author.getFio()}">
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-1">
+                    <label for="edit-book-countSheets" class="col-form-label">Count of sheets:</label>
+                    <input type="number" class="form-control" th:field="*{countOfSheets}" id="edit-book-countSheets"
+                           name="countOfSheets">
+                </div>
+                <div class="mb-1">
+                    <label for="book_general_count" class="col-form-label">GeneralCount:</label>
+                    <input type="number" class="form-control" th:field="*{generalCount}" id="book_general_count" name="generalCount">
+                </div>
+                <div class="mb-1">
+                    <label for="book_available_count" class="col-form-label">AvailableCount:</label>
+                    <input type="number" class="form-control" th:field="*{availableCount}"  id="book_available_count" name="availableCount">
+                </div>
+                <div class="mb-1">
+                    <label for="edit-book-year" class="col-form-label">YearOfIssue:</label>
+                    <input type="data" class="form-control"
+                           th:field="*{yearOfIssue}" id="edit-book-year" name="yearOfIssue">
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{close}">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary" th:text="#{save}">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

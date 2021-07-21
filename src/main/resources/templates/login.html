@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header :: head(~{}, ~{::link})">
+    <link type="text/css" th:rel="stylesheet" th:href="@{/css/signin.css}">
+</div>
+<body class="text-center" style="background-color: #66a2ba">
+<main class="form-signin">
+    <form method="post" action="/auth/login">
+        <img class="mb-4" th:src="@{/img/logo.jpeg}" alt="" width="258" height="228">
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+        <div class="form-floating">
+            <input type="text" name="username" class="form-control" id="floatingInput">
+            <label for="floatingInput">Login</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" name="password" class="form-control" id="floatingPassword">
+            <label for="floatingPassword">Password</label>
+        </div>
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="remember-me"> Remember me
+            </label>
+        </div>
+
+        <div th:replace="fragments/alert"></div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">© 2017–2021</p>
+    </form>
+</main>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/header::head(~{::script}, ~{})">
+    <script type="text/javascript" th:src="@{/js/references.js}"></script>
+</head>
+<body>
+<header>
+    <div th:replace="fragments/nav-bar :: nav_bar"></div>
+</header>
+<main>
+    <div class="container-fluid mt-1">
+        <ul class="nav nav-tabs" id="referencesTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" id="author-tab" th:href="@{/references/authors}" data-bs-toggle="tab"
+                   data-bs-target="#authorTab"
+                   role="tab">Авторы</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="book-tab" th:href="@{/references/books}" data-bs-toggle="tab"
+                   data-bs-target="#bookTab"
+                   role="tab">Книги</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="magazine-tab" th:href="@{/references/magazines}" data-bs-toggle="tab"
+                   data-bs-target="#magazineTab"
+                   role="tab">Журналы</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade" id="authorTab" role="tabpanel"></div>
+            <div class="tab-pane fade" id="bookTab" role="tabpanel"></div>
+            <div class="tab-pane fade" id="magazineTab" role="tabpanel"></div>
+        </div>
+    </div>
+</main>
+<footer th:include="fragments/footer :: footer"></footer>
+</body>
+</html>

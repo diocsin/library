@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="addModalLabel" th:text="#{book.title.new}">New book</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form th:action="@{references/books/saveBook}" method="post" enctype="multipart/form-data" id="add_book">
+                <div class="mb-3">
+                    <label for="book-name" class="col-form-label" th:text="#{book.name}">Name:</label>
+                    <input type="text" class="form-control" id="book-name" name="name">
+                </div>
+                <div class="mb-3">
+                    <label for="book-genre" class="col-form-label" th:text="#{book.genre}">Жанр:</label>
+                    <select name="genre" class="form-select" id="book-genre" required>
+                        <option value="" selected="selected"></option>
+                        <option th:each="genre: ${T(com.example.library.library.model.Genre).values()}"
+                                th:value="${genre}"
+                                th:text="${genre.getRusName()}">
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="book-author" class="col-form-label">Автор:</label>
+                    <select name="author" class="form-select" id="book-author" required>
+                        <option value="" selected="selected"></option>
+                        <option th:each="author: ${authors}"
+                                th:value="${author.getPid()}"
+                                th:text="${author.getFio()}">
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="book-countSheets" class="col-form-label">Count of sheets:</label>
+                    <input type="number" class="form-control" id="book-countSheets" name="countOfSheets">
+                </div>
+
+                <div class="mb-3">
+                    <label for="book_general_count" class="col-form-label">GeneralCount:</label>
+                    <input type="number" class="form-control" id="book_general_count" name="generalCount">
+                </div>
+                <div class="mb-3">
+                    <label for="book_available_count" class="col-form-label">AvailableCount:</label>
+                    <input type="number" class="form-control" id="book_available_count" name="availableCount">
+                </div>
+                <div class="mb-3">
+                    <label for="book-year" class="col-form-label">YearOfIssue:</label>
+                    <input type="date" class="form-control" id="book-year"
+                           name="yearOfIssue">
+                </div>
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Обложка</label>
+                    <input class="form-control" type="file" id="formFile" name="maintenanceFile">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{close}">Close
+                    </button>
+                    <button type="submit" class="btn btn-primary" th:text="#{save}">Save</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<table class="table">
+    <thead class="table-secondary">
+    <tr>
+        <th scope="col">Название</th>
+        <th scope="col">Жанр</th>
+        <th scope="col">Автор</th>
+        <th scope="col">Дата издания</th>
+        <th scope="col">Количество листов</th>
+        <th scope="col">Общее количество книг</th>
+        <th scope="col">Доступное количество книг</th>
+        <th scope="col">Операции</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}" th:object="${book}">
+        <td th:text="*{name}"></td>
+        <td th:text="*{genre}"></td>
+        <td th:text="*{author.getFio()}"></td>
+        <td th:text="*{yearOfIssue}"></td>
+        <td th:text="*{countOfSheets}"></td>
+        <td th:text="*{generalCount}"></td>
+        <td th:text="*{availableCount}"></td>
+        <td>
+            <a th:href="@{book/edit/(pid=*{pid})}" class="btn btn-warning">
+               Edit
+            </a>
+            <a th:href="@{book/delete/(pid=*{pid})}" class="btn btn-danger">
+                Delete
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</html>
