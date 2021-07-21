@@ -1,9 +1,11 @@
 package com.example.library.library.controller;
 
+import com.example.library.library.utils.AuthUtil;
 import com.example.library.library.model.Book;
 import com.example.library.library.service.AuthorService;
 import com.example.library.library.service.BookService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +36,8 @@ public class BookController {
 
     @GetMapping()
     public String getAll(Model model) {
+        User user = (User) AuthUtil.getUserFromContext();
+        Boolean isAdmin = user.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals("ADMIN"));
         List<Book> books = bookService.getAllBooks();
         model.addAttribute("books", books);
         return "references/book/book";
